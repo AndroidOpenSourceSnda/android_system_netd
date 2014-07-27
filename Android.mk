@@ -17,13 +17,18 @@ LOCAL_SRC_FILES:=                                      \
                   PppController.cpp                    \
                   ResolverController.cpp               \
                   SecondaryTableController.cpp         \
-                  SoftapController.cpp                 \
                   TetherController.cpp                 \
                   ThrottleController.cpp               \
                   oem_iptables_hook.cpp                \
                   logwrapper.c                         \
                   main.cpp                             \
 
+ifeq ($(WLAN_ENABLE_STE_WIFI_TETHERING), true)
+LOCAL_SRC_FILES+= SoftapController_ste.cpp
+LOCAL_SHARED_LIBRARIES += libhardware_legacy
+else
+LOCAL_SRC_FILES+= SoftapController.cpp
+endif
 
 LOCAL_MODULE:= netd
 
